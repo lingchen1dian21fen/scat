@@ -1,5 +1,6 @@
 package com.cbo.scat.webservice;
 
+import com.cbo.scat.provider.LoggerFilter;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
@@ -10,7 +11,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 public class JerseyConfig extends ResourceConfig {
 
     public JerseyConfig() {
-
+        register(LoggerFilter.class);
         register(JacksonFeature.class);
         register(StudentRest.class);
 

@@ -1,9 +1,9 @@
 package com.cbo.scat.webservice;
 
 import com.cbo.scat.bean.Message;
-import com.cbo.scat.model.Pojo;
 import com.cbo.scat.model.Student;
 import com.cbo.scat.model.User;
+import com.cbo.scat.provider.LoggerFilter;
 import com.cbo.scat.server.imp.StudentServiceImp;
 import com.cbo.scat.server.imp.UserServiceImp;
 import groovy.util.logging.Slf4j;
@@ -20,25 +20,23 @@ import javax.ws.rs.core.MediaType;
  * @Date: 2018/4/25
  */
 @Slf4j
-@Path("/student")
-public class StudentRest {
+@Path("/{userNo}/student")
+public class StudentRest extends ScatRest{
 
     @Autowired
     private StudentServiceImp stuService;
-    @Autowired
-    private UserServiceImp userService;
 
     @GET
-    @Path("/{userNo}/get/{id}")
+    @Path("/get/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-
+    @LoggerFilter.UserLogger
     public String get(@PathParam("id") int id,@PathParam("userNo") String userNo) {
-        User user = userService.getUser(userNo);
+        User user = checkUser(userNo);
         if(user == null){
-            return Message.getNotPermission().toString();
+            return Message.getNotPermission().toJson();
         }
         Student stu = (Student) stuService.get(id);
-        return new Message(stu).toString();
+        return new Message(stu).toJson();
     }
 
 }
