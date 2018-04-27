@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="com.cbo.scat.dao.TeacherDao">
+    <parameterMap id="parameterMap" type="com.cbo.scat.model.Teacher" ></parameterMap>
+    <resultMap id="teacher" type="com.cbo.scat.model.Teacher">
+        <id column="tea_id" property="teaId" />
+        <result column="tea_no" property="teaNo" />
+        <result column="tea_name" property="teaName" />
+        <result column="tea_sex" property="teaSex" />
+        <result column="tea_age" property="teaAge" />
+        <result column="register_time" property="registerTime" />
+        <result column="tea_phone" property="teaPhone" />
+        <result column="tea_address" property="teaAddress" />
+        <result column="tea_remark" property="teaRemark" />
+    </resultMap>
+
+    <select id="get" resultMap="teacher" parameterType="long">
+        SELECT * FROM tb_teacher WHERE tea_id= #{value}
+    </select>
+
+    <select id="getByNo" resultMap="teacher" parameterType="java.lang.String">
+        SELECT * FROM tb_teacher WHERE tea_no= #{value}
+    </select>
+
+    <insert id="add" parameterMap="parameterMap">
+      INSERT INTO tb_teacher
+      <trim prefix="(" suffix=")" suffixOverrides=",">
+          tea_no,
+          tea_name,
+          tea_sex,
+          tea_age,
+          register_time,
+          tea_phone,
+          tea_address,
+          tea_remark
+      </trim>
+      <trim prefix=" values (" suffix=")" suffixOverrides=",">
+          #{teaNo},
+          #{teaName},
+          #{teaSex},
+          #{teaAge},
+          #{registerTime},
+          #{teaPhone},
+          #{teaAddress},
+          #{teaRemark}
+      </trim>
+    </insert>
+
+    <update id="update" parameterMap="parameterMap" >
+        UPDATE tb_teacher
+        <set>
+            tea_no = #{teaNo},
+            tea_name =  #{teaName},
+            tea_sex = #{teaSex},
+            tea_age = #{teaAge},
+            register_time = #{registerTime},
+            tea_phone =  #{teaPhone},
+            tea_address =  #{teaAddress},
+            tea_remark = #{teaRemark}
+        </set>
+        WHERE stu_id = #{stuId}
+    </update>
+
+    <delete id="delete" parameterType="long" >
+        DELETE FROM tb_teacher WHERE tea_id = #{value}
+    </delete>
+
+    <select id="find" resultMap="teacher" parameterMap="parameterMap">
+        SELECT * FROM tb_teacher
+        <where>
+            1=1
+            <if test="teaId != 0">
+               AND tea_id = #{teaId}
+            </if>
+            <if test="stuName != null and stuName != ''">
+                AND tea_name = #{teaId}
+            </if>
+        </where>
+    </select>
+</mapper>

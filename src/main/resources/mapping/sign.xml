@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="com.cbo.scat.dao.SignDao">
+    <parameterMap id="parameterMap" type="com.cbo.scat.model.Sign" />
+    <resultMap id="sign" type="com.cbo.scat.model.Sign">
+        <id column="sign_id" property="signId" />
+        <result column="user_id" property="userId" />
+        <result column="user_no" property="userNo" />
+        <result column="user_name" property="userName" />
+        <result column="user_type" property="userType" />
+        <association column="course_id" property="course" javaType="Course" select="com.cbo.scat.dao.CourseDao.get" />
+    </resultMap>
+
+    <select id="get" resultMap="sign" parameterType="long">
+        SELECT * FROM tb_sign WHERE sign_id= #{value}
+    </select>
+
+    <insert id="add" parameterMap="parameterMap">
+      INSERT INTO tb_sign
+      <trim prefix="(" suffix=")" suffixOverrides=",">
+          user_id,
+          user_no,
+          user_name,
+          user_type,
+          course_id
+      </trim>
+      <trim prefix=" values (" suffix=")" suffixOverrides=",">
+          #{userId},
+          #{userNo},
+          #{userName},
+          #{userType},
+          #{course.courseId}
+      </trim>
+    </insert>
+
+    <delete id="delete" parameterType="long" >
+        DELETE FROM tb_sign WHERE sign_id = #{value}
+    </delete>
+
+    <select id="find" resultMap="sign" parameterMap="parameterMap">
+        SELECT * FROM tb_teacher
+        <where>
+            1=1
+            <if test="signId != 0">
+               AND sign_id = #{signId}
+            </if>
+            <if test="stuName != null and stuName != ''">
+                AND tea_name = #{teaId}
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="com.cbo.scat.dao.StudentDao">
+    <parameterMap id="parameterMap" type="com.cbo.scat.model.Student" />
+    <resultMap id="student" type="com.cbo.scat.model.Student">
+        <id column="stu_id" property="stuId" />
+        <result column="stu_no" property="stuNo" />
+        <result column="stu_name" property="stuName" />
+        <result column="stu_sex" property="stuSex" />
+        <result column="stu_age" property="stuAge" />
+        <result column="stu_phone" property="stuPhone" />
+        <result column="register_time" property="registerTime" />
+        <result column="stu_grade" property="stuGrade" />
+        <result column="stu_address" property="stuAddress" />
+        <result column="stu_remark" property="stuRemark" />
+        <result column="stu_school" property="stuSchool" />
+    </resultMap>
+
+    <select id="get" resultMap="student" parameterType="long">
+        SELECT * FROM tb_student WHERE stu_id= #{value}
+    </select>
+
+    <select id="getByNo" resultMap="student" parameterType="java.lang.String">
+        SELECT * FROM tb_student WHERE stu_no= #{value}
+    </select>
+
+    <insert id="add" parameterMap="parameterMap">
+      INSERT INTO tb_student
+      <trim prefix="(" suffix=")" suffixOverrides=",">
+          stu_no,
+          stu_name,
+          stu_sex,
+          stu_age,
+          stu_phone,
+          register_time,
+          stu_grade,
+          stu_address,
+          stu_remark,
+          stu_school
+      </trim>
+      <trim prefix=" values (" suffix=")" suffixOverrides=",">
+          #{stuNo},
+          #{stuName},
+          #{stuSex},
+          #{stuAge},
+          #{stuPhone},
+          #{registerTime},
+          #{stuGrade},
+          #{stuAddress},
+          #{stuRemark},
+          #{stuSchool}
+      </trim>
+    </insert>
+
+    <update id="update" parameterMap="parameterMap" >
+        UPDATE tb_student
+        <set>
+            stu_no = #{stuNo},
+            stu_name = #{stuName},
+            stu_sex = #{stuSex},
+            stu_age =  #{stuAge},
+            stu_phone = #{stuPhone},
+            registe_time = #{registerTime},
+            stu_grade = #{stuGrade},
+            stu_address =  #{stuAddress},
+            stu_remark =  #{stuRemark},
+            stu_school = #{stuSchool}
+        </set>
+        WHERE stu_id = #{stuId}
+    </update>
+
+    <delete id="delete" parameterType="long" >
+        DELETE FROM tb_student WHERE stu_id = #{value}
+    </delete>
+
+    <select id="find" resultMap="student" parameterMap="parameterMap">
+        SELECT * FROM tb_student
+        <where>
+            1=1
+            <if test="stuId != 0">
+               AND stu_id = #{stuId}
+            </if>
+            <if test="stuName != null and stuName != ''">
+                AND stu_name = #{stuName}
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="com.cbo.scat.dao.CourseDao">
+    <parameterMap id="parameterMap" type="com.cbo.scat.model.Course"></parameterMap>
+    <resultMap id="course" type="com.cbo.scat.model.Course">
+        <id column="course_id" property="courseId"></id>
+        <result column="course_name" property="courseName" />
+        <result column="course_grade" property="courseGrade" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="course_state" property="courseState" />
+    </resultMap>
+
+    <select id="get" resultMap="course" parameterType="long">
+        SELECT * FROM tb_course WHERE course_id= #{value}
+    </select>
+
+    <insert id="add" parameterMap="parameterMap">
+      INSERT INTO tb_course
+      <trim prefix="(" suffix=")" suffixOverrides=",">
+          course_name,
+          course_grade,
+          start_time,
+          end_time,
+          course_state
+      </trim>
+      <trim prefix=" values (" suffix=")" suffixOverrides=",">
+          #{courseName},
+          #{courseGrade},
+          #{startTime},
+          #{endTime},
+          #{courseState}
+      </trim>
+    </insert>
+
+    <update id="update" parameterMap="parameterMap" >
+        UPDATE tb_course
+        <set>
+            course_name = #{courseName},
+            course_grade =  #{courseGrade},
+            start_time = #{startTime},
+            end_time = #{endTime},
+            course_state = #{courseState},
+        </set>
+        WHERE course_id = #{courseId}
+    </update>
+
+    <delete id="delete" parameterType="long" >
+        DELETE FROM tb_course WHERE course_id = #{value}
+    </delete>
+
+    <select id="find" resultMap="course" parameterMap="parameterMap">
+        SELECT * FROM tb_course
+        <where>
+            1=1
+            <if test="courseId != 0">
+               AND course_id = #{courseId}
+            </if>
+            <if test="courseName != null and courseName != ''">
+                AND course_name = #{courseId}
+            </if>
+        </where>
+    </select>
+</mapper>
