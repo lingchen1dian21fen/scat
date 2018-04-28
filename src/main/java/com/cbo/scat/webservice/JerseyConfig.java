@@ -14,6 +14,6 @@ public class JerseyConfig extends ResourceConfig {
         register(LoggerFilter.class);
         register(JacksonFeature.class);
         register(StudentRest.class);
-
+        //register("com.cbo.scat.webservice");
     }
 }
