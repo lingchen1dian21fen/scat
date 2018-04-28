@@ -5,14 +5,10 @@ import com.cbo.scat.model.Student;
 import com.cbo.scat.model.User;
 import com.cbo.scat.provider.LoggerFilter;
 import com.cbo.scat.server.imp.StudentServiceImp;
-import com.cbo.scat.server.imp.UserServiceImp;
 import groovy.util.logging.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -38,5 +34,26 @@ public class StudentRest extends ScatRest{
         Student stu = (Student) stuService.get(id);
         return new Message(stu).toJson();
     }
+
+    @POST
+    @Path("/add")
+    @Consumes( MediaType.APPLICATION_JSON+";charset=UTF-8")
+    @Produces(MediaType.APPLICATION_JSON)
+    @LoggerFilter.UserLogger
+    public String add(Student stu,@PathParam("userNo") String userNo){
+        System.out.println(userNo);
+        System.out.println(stu.toString());
+        return Message.getNotPermission().toJson();
+    }
+
+    @GET
+    @Path("/test/{msg}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @LoggerFilter.UserLogger
+    public String test(@PathParam("msg")String msg){
+        System.out.println(msg);
+        return msg;
+    }
+
 
 }

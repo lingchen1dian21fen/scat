@@ -1,12 +1,14 @@
 package com.cbo.scat.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.Date;
 /**
  *
  * @Author: chengbo
  * @Date: 2018/4/20
  */
-
+@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class Student implements Pojo {
 
     private long stuId;
