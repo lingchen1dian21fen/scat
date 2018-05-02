@@ -1,5 +1,6 @@
 package com.cbo.scat.webservice;
 
+import com.alibaba.fastjson.JSON;
 import com.cbo.scat.bean.Message;
 import com.cbo.scat.model.Student;
 import com.cbo.scat.model.User;
@@ -7,6 +8,11 @@ import com.cbo.scat.provider.LoggerFilter;
 import com.cbo.scat.server.imp.StudentServiceImp;
 import groovy.util.logging.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -41,9 +47,18 @@ public class StudentRest extends ScatRest{
     @Produces(MediaType.APPLICATION_JSON)
     @LoggerFilter.UserLogger
     public String add(Student stu,@PathParam("userNo") String userNo){
-        System.out.println(userNo);
-        System.out.println(stu.toString());
-        return Message.getNotPermission().toJson();
+    	Date registerTime = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String now = sdf.format(registerTime);
+		stu.setRegisterTime(now);
+		Integer i = stuService.add(stu);
+		String msg = null;
+		if (i > 0) {
+			msg = "success";
+		} else {
+			msg = "faild";
+		}
+		return JSON.toJSONString(msg);
     }
 
     @GET

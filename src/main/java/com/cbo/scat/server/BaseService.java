@@ -18,8 +18,8 @@ public abstract class BaseService {
         return getBaseDao().get(id);
     }
 
-    public void add(Pojo pojo){
-        getBaseDao().add(pojo);
+    public Integer add(Pojo pojo){
+    	return getBaseDao().add(pojo);
     }
 
     public void updata(Pojo pojo){
