@@ -48,6 +48,7 @@ public class StudentRest extends ScatRest{
 
     @GET
     @Path("/test/{msg}")
+    @Consumes( MediaType.APPLICATION_JSON+";charset=UTF-8")
     @Produces(MediaType.APPLICATION_JSON)
     @LoggerFilter.UserLogger
     public String test(@PathParam("msg")String msg){

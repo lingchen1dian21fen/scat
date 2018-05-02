@@ -1,0 +1,21 @@
+<assembly >
+	<id>release</id>
+	<formats>
+		<format>tar.gz</format>
+	</formats>
+
+	<files>
+		<file>
+			<source>${project.basedir}/target/scat.jar</source>
+			<destName>scat-1.0.jar</destName>
+		</file>
+	</files>
+
+	<fileSets>
+		<fileSet>
+			<directory>src/main/resources</directory>
+			<outputDirectory>conf</outputDirectory>
+			<fileMode>0644</fileMode>
+		</fileSet>
+	</fileSets>
+</assembly>
