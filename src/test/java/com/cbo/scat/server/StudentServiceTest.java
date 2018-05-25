@@ -27,7 +27,7 @@ public class StudentServiceTest extends ScatApplicationTests implements ServiceT
         Student stu = new Student();
         stu.setStuNo("bbb");
         stu.setStuName("李四");
-        stu.setRegisterTime(new Date());
+//        stu.setRegisterTime(new Date());
         stu.setStuGrade(7);
         stuService.add(stu);
     }

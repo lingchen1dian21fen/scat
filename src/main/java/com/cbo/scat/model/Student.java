@@ -17,7 +17,7 @@ public class Student implements Pojo {
     private String stuSex;
     private int stuAge;
     private String stuPhone;
-    private Date registerTime;
+    private String registerTime;
     private int stuGrade;   //由于时间变化，年级采用int用来计算 当前年级   默认
     private String stuAddress;
     private String stuRemark;
@@ -88,11 +88,11 @@ public class Student implements Pojo {
         this.stuPhone = stuPhone;
     }
 
-    public Date getRegisterTime() {
+    public String getRegisterTime() {
         return registerTime;
     }
 
-    public void setRegisterTime(Date registerTime) {
+    public void setRegisterTime(String registerTime) {
         this.registerTime = registerTime;
     }
 

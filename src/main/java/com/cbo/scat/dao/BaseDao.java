@@ -13,7 +13,7 @@ public interface BaseDao {
 
     public Pojo get(long id);
 
-    public void add(Pojo pojo);
+    public Integer add(Pojo pojo);
 
     public void update(Pojo u);
 
